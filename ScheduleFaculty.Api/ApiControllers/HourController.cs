@@ -62,7 +62,7 @@ public class HourController : ControllerBase
 
         // var hour = await _hourService.CreateHour(user.Id, hourDto.LocationId, hourDto.StartHour, hourDto.EndHour,
         //     hourDto.Dates);
-        var hour = await _hourService.CreateHour(user.Id, hourDto.LocationId, hourDto.StartHour, hourDto.EndHour,
+        var hour = await _hourService.CreateHour(user.Id, hourDto.LocationId, hourDto.StartHour, hourDto.EndHour, hourDto.CourseName,
             hourDto.DatesToHour);
         if (hour.HasErrors())
         {

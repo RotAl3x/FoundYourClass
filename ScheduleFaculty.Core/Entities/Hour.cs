@@ -12,6 +12,8 @@ public class Hour
     public string StartHour { get; set; }
     public string EndHour { get; set; }
     
+    public string CourseName { get; set; }
+    
     [JsonIgnore]
     public virtual ICollection<DatesToHour> DatesToHour { get; set; }
     

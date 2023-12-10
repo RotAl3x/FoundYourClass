@@ -13,6 +13,7 @@ public static class CoreSpecifications
     {
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IHourService, HourService>();
+        services.AddScoped<ILocationService, LocationService>();
 
         return services;
     }

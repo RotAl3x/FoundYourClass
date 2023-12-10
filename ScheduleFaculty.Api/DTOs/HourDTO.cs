@@ -6,5 +6,7 @@ public class HourDTO
     public Guid LocationId { get; set; }
     public string StartHour { get; set; }
     public string EndHour { get; set; }
+    
+    public string CourseName { get; set; }
     public List<DateTime> DatesToHour { get; set; }
 }

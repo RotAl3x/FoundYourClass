@@ -9,5 +9,6 @@ public class HourResponseDTO
     public Location Location { get; set; }
     public string StartHour { get; set; }
     public string EndHour { get; set; }
+    public string CourseName { get; set; }
     public ICollection<DatesToHourDTO> DatesToHour { get; set; }
 }

@@ -40,7 +40,7 @@ public class HourService: IHourService
         throw new NotImplementedException();
     }
 
-    public async Task<ActionResponse<Hour>> CreateHour(string userId, Guid locationId, string startHour, string endHour, List<DateTime> dates)
+    public async Task<ActionResponse<Hour>> CreateHour(string userId, Guid locationId, string startHour, string endHour, string courseName, List<DateTime> dates)
     {
         var response = new ActionResponse<Hour>();
 
@@ -52,6 +52,7 @@ public class HourService: IHourService
             LocationId = locationId,
             StartHour = startHour,
             EndHour = endHour,
+            CourseName = courseName
         });
         await _dbContext.SaveChangesAsync();
 
@@ -73,7 +74,7 @@ public class HourService: IHourService
         return response;
     }
 
-    public Task<ActionResponse<Hour>> EditHour(Guid id, string userId, Guid locationId, string startHour, string endHour, List<DateTime> dates)
+    public Task<ActionResponse<Hour>> EditHour(Guid id, string userId, Guid locationId, string startHour, string endHour, string courseName, List<DateTime> dates)
     {
         throw new NotImplementedException();
     }
