@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ScheduleFaculty.Core.Database;
@@ -11,9 +12,11 @@ using ScheduleFaculty.Core.Database;
 namespace ScheduleFaculty.Core.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231207200819_AddLocationAndHour")]
+    partial class AddLocationAndHour
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,9 +248,6 @@ namespace ScheduleFaculty.Core.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("HourId")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("SpecialEvent")
                         .HasColumnType("boolean");
 
@@ -256,8 +256,6 @@ namespace ScheduleFaculty.Core.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HourId");
 
                     b.HasIndex("UserId");
 
@@ -270,18 +268,23 @@ namespace ScheduleFaculty.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("EndHour")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("DatesToHourId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("StartHour")
+                    b.Property<string>("endHour")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("startHour")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DatesToHourId");
 
                     b.HasIndex("LocationId");
 
@@ -366,37 +369,32 @@ namespace ScheduleFaculty.Core.Migrations
 
             modelBuilder.Entity("ScheduleFaculty.Core.Entities.DatesToHour", b =>
                 {
-                    b.HasOne("ScheduleFaculty.Core.Entities.Hour", "Hour")
-                        .WithMany("DatesToHour")
-                        .HasForeignKey("HourId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ScheduleFaculty.Core.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Hour");
-
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("ScheduleFaculty.Core.Entities.Hour", b =>
                 {
+                    b.HasOne("ScheduleFaculty.Core.Entities.Location", "DatesToHour")
+                        .WithMany()
+                        .HasForeignKey("DatesToHourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ScheduleFaculty.Core.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("ScheduleFaculty.Core.Entities.Hour", b =>
-                {
                     b.Navigation("DatesToHour");
+
+                    b.Navigation("Location");
                 });
 #pragma warning restore 612, 618
         }

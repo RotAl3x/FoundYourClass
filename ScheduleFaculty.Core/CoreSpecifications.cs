@@ -12,6 +12,7 @@ public static class CoreSpecifications
     public static IServiceCollection AddCoreSpecifications(this IServiceCollection services)
     {
         services.AddScoped<IIdentityService, IdentityService>();
+        services.AddScoped<IHourService, HourService>();
 
         return services;
     }
