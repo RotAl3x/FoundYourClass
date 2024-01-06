@@ -26,6 +26,24 @@ public class LocationService : ILocationService
         return response;
     }
 
+    public async Task<ActionResponse<Location>> CreateLocation(string name, decimal latitude, decimal longitude, string videoPath)
+    {
+        var response = new ActionResponse<Location>();
+
+        var dbLocation = await _dbContext.Location.AddAsync(new Location
+        {
+            Name = name,
+            Latitude = latitude,
+            Longitude = longitude,
+            VideoPath = videoPath,   
+        });
+        await _dbContext.SaveChangesAsync();
+
+
+        response.Item = dbLocation.Entity;
+        return response;
+    }
+
     public async Task<ActionResponse<string>> SaveFile(IFormFile file)
     {
         var response = new ActionResponse<string>();

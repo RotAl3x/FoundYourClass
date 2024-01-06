@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using ScheduleFaculty.Api.DTOs;
 using ScheduleFaculty.Core.Entities;
 using ScheduleFaculty.Core.Services.Abstractions;
 
@@ -35,6 +36,19 @@ public class LocationController : ControllerBase
         }
 
         return Ok(locations.Item);
+    }
+
+    [HttpPost("AddLocation")]
+    public async Task<ActionResult> AddLocation(LocationDTO locationDTO)
+    {
+        var location = await _locationService.CreateLocation(locationDTO.Name, locationDTO.Latitude, locationDTO.Longitude, locationDTO.VideoPath);
+
+        if (location.HasErrors())
+        {
+            return BadRequest(location.Errors);
+        }
+
+        return Ok(location.Item);
     }
 
     [HttpPost("UploadFile")]
