@@ -52,19 +52,21 @@ public class LocationService : ILocationService
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             filename = DateTime.Now.Ticks.ToString() + extension;
-            var filepath = "D:\\Upload\\Files";
+            var filepath = "D:\\Proiecte\\FindYourClass\\src\\assets\\video";
 
             if (!Directory.Exists(filepath))
             {
                 Directory.CreateDirectory(filepath);
             }
 
-            var exactpath = Path.Combine("D:\\Upload\\Files", filename);
+            var exactpath = Path.Combine("D:\\Proiecte\\FindYourClass\\src\\assets\\video", filename);
+
+
             using (var stream = new FileStream(exactpath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-            response.Item = exactpath;
+            response.Item = $"path: assets\\video\\{filename}";
             return response;
         }
         catch (Exception ex)
